@@ -1,6 +1,6 @@
 {
   "name": "react-page-view-count",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Counts and displays page views - Lightweight plug-and-play - Built for React",
   "main": "dist/index.js",
   "scripts": {
