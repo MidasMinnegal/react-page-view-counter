@@ -28,7 +28,10 @@ const getHost = () => {
 
 const removeSpecialCharactersFromString = (string) => string.replace(/[^a-zA-Z0-9]/g, '')
 
-export default function usePageViewCounter() {
+export default function usePageViewCounter(
+  props = {},
+) {
+  const { customKey } = props
   const [count, setCount] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
 
@@ -37,7 +40,9 @@ export default function usePageViewCounter() {
 
     const host = getHost()
     const path = window?.location.pathname
-    const key = removeSpecialCharactersFromString(`${KEY_PREFIX}${host}${path}`)
+    const key = customKey
+      ? removeSpecialCharactersFromString(customKey)
+      : removeSpecialCharactersFromString(`${KEY_PREFIX}${host}${path}`)
 
     const visitedKeys = JSON.parse(localStorage.getItem(VISITED_STORAGE_KEY)) || []
     const hasVisited = visitedKeys.includes(key)
@@ -67,7 +72,7 @@ export default function usePageViewCounter() {
 
     if (!hasVisited) fetchAndIncrementCount()
     else fetchCount()
-  }, [])
+  }, [customKey])
 
   return [count, isLoading]
 }
