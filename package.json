@@ -4,7 +4,8 @@
   "description": "Counts and displays page views - Lightweight plug-and-play - Built for React",
   "main": "index.js",
   "scripts": {
-    "build": "babel src --out-dir dist"
+    "build": "babel src --out-dir dist",
+    "lint": "eslint src"
   },
   "repository": {
     "type": "git",
@@ -30,7 +31,15 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.25.7",
+    "@babel/eslint-parser": "^7.25.8",
     "@babel/preset-env": "^7.25.8",
-    "@babel/preset-react": "^7.25.7"
+    "@babel/preset-react": "^7.25.7",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^8.57.1",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-jsx-a11y": "^6.10.1",
+    "eslint-plugin-react": "^7.37.1",
+    "eslint-plugin-react-hooks": "^4.6.2"
   }
 }
