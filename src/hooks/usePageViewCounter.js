@@ -5,6 +5,7 @@ const LOCALHOST_STORAGE_KEY = 'react-page-view-counter-localhost-id'
 const VISITED_STORAGE_KEY = 'react-page-view-counter-visited'
 
 const KEY_PREFIX = 'reactPageViewCounter'
+const ERROR_PREFIX = '[ERROR][react-page-view-count]'
 
 const getLocalHostStorageId = () => {
   const localStorageHostId = localStorage.getItem(LOCALHOST_STORAGE_KEY)
@@ -29,14 +30,13 @@ const removeSpecialCharactersFromString = (string) => string.replace(/[^a-zA-Z0-
 
 export default function usePageViewCounter() {
   const [count, setCount] = useState(0)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const counter = new CounterAPI()
 
-    if (!window) return
-
     const host = getHost()
-    const path = window.location.pathname
+    const path = window?.location.pathname
     const key = removeSpecialCharactersFromString(`${KEY_PREFIX}${host}${path}`)
 
     const visitedKeys = JSON.parse(localStorage.getItem(VISITED_STORAGE_KEY)) || []
@@ -48,8 +48,10 @@ export default function usePageViewCounter() {
         localStorage.setItem(VISITED_STORAGE_KEY, JSON.stringify([...visitedKeys, key]))
         setCount(newCount)
       } catch (e) {
-        console.error('[ERROR][react-page-view-count]', e)
+        console.error(ERROR_PREFIX, e)
       }
+
+      setIsLoading(false)
     }
 
     const fetchCount = async () => {
@@ -57,13 +59,15 @@ export default function usePageViewCounter() {
         const { Count: newCount } = await counter.get(host, key)
         setCount(newCount)
       } catch (e) {
-        console.error('[ERROR][react-page-view-count]', e)
+        console.error(ERROR_PREFIX, e)
       }
+
+      setIsLoading(false)
     }
 
     if (!hasVisited) fetchAndIncrementCount()
     else fetchCount()
   }, [])
 
-  return count
+  return [count, isLoading]
 }
