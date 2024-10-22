@@ -38,6 +38,16 @@ const extractPropsFromSettings = (settings) => ({
     ? settings.onlyCountUniqueVisitors : defaultSettings.onlyCountUniqueVisitors,
 })
 
+/**
+ * Get the current page view numbers and automatically increments them.
+ *
+ * @param {Object} settings - The settings for this hook
+ * @param {string} settings.customKey - A custom key that is used to store the view count.
+ * @param {boolean} settings.onlyCountUniqueVisitors - Defaults to true. If set to false,
+ *     a single user who visits the page multiple times will be counted multiple times.
+ *
+ * @returns {[number,boolean]} - The count and the loading status
+ */
 export default function usePageViewCounter(
   settings,
 ) {
