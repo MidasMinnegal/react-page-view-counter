@@ -1,7 +1,10 @@
 import React from 'react'
+import usePageViewCounter from '../../hooks/usePageViewCounter'
 
 function PageViewCounter() {
-  return <>0</>
+  const [count, isLoading] = usePageViewCounter()
+
+  return isLoading ? '' : count
 }
 
 export default PageViewCounter
