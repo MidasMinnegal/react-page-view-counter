@@ -28,10 +28,21 @@ const getHost = () => {
 
 const removeSpecialCharactersFromString = (string) => string.replace(/[^a-zA-Z0-9]/g, '')
 
+const defaultSettings = {
+  onlyCountUniqueVisitors: true,
+}
+
+const extractPropsFromSettings = (settings) => ({
+  customKey: settings?.customKey,
+  onlyCountUniqueVisitors: typeof settings?.onlyCountUniqueVisitors === 'boolean'
+    ? settings.onlyCountUniqueVisitors : defaultSettings.onlyCountUniqueVisitors,
+})
+
 export default function usePageViewCounter(
-  settings = {},
+  settings,
 ) {
-  const { customKey } = settings
+  const { customKey, onlyCountUniqueVisitors } = extractPropsFromSettings(settings)
+
   const [count, setCount] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
 
@@ -70,9 +81,9 @@ export default function usePageViewCounter(
       setIsLoading(false)
     }
 
-    if (!hasVisited) fetchAndIncrementCount()
+    if (!hasVisited || !onlyCountUniqueVisitors) fetchAndIncrementCount()
     else fetchCount()
-  }, [customKey])
+  }, [customKey, onlyCountUniqueVisitors])
 
   return [count, isLoading]
 }
