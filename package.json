@@ -1,0 +1,36 @@
+{
+  "name": "react-page-view-count",
+  "version": "1.0.0",
+  "description": "Counts and displays page views - Lightweight plug-and-play - Built for React",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+    "React",
+    "page",
+    "view",
+    "counter",
+    "counter",
+    "page",
+    "views",
+    "view",
+    "counter"
+  ],
+  "author": "Midas Minnegal",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "^7.25.8",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.25.7",
+    "@babel/preset-env": "^7.25.8",
+    "@babel/preset-react": "^7.25.7"
+  }
+}
