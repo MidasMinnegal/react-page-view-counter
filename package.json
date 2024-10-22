@@ -2,7 +2,7 @@
   "name": "react-page-view-count",
   "version": "1.0.1",
   "description": "Counts and displays page views - Lightweight plug-and-play - Built for React",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "babel src --out-dir dist",
     "lint": "eslint src"
