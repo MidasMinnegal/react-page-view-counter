@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { CounterAPI } from 'counterapi'
 
 const LOCALHOST_STORAGE_KEY = 'react-page-view-counter-localhost-id'
+const VISITED_STORAGE_KEY = 'react-page-view-counter-visited'
+
 const KEY_PREFIX = 'reactPageViewCounter'
 
 const getLocalHostStorageId = () => {
@@ -37,12 +39,30 @@ export default function usePageViewCounter() {
     const path = window.location.pathname
     const key = removeSpecialCharactersFromString(`${KEY_PREFIX}${host}${path}`)
 
-    const fetchData = async () => {
-      const { Count: newCount } = await counter.up(host, key)
-      setCount(newCount)
+    const visitedKeys = JSON.parse(localStorage.getItem(VISITED_STORAGE_KEY)) || []
+    const hasVisited = visitedKeys.includes(key)
+
+    const fetchAndIncrementCount = async () => {
+      try {
+        const { Count: newCount } = await counter.up(host, key)
+        localStorage.setItem(VISITED_STORAGE_KEY, JSON.stringify([...visitedKeys, key]))
+        setCount(newCount)
+      } catch (e) {
+        console.error('[ERROR][react-page-view-count]', e)
+      }
     }
 
-    fetchData()
+    const fetchCount = async () => {
+      try {
+        const { Count: newCount } = await counter.get(host, key)
+        setCount(newCount)
+      } catch (e) {
+        console.error('[ERROR][react-page-view-count]', e)
+      }
+    }
+
+    if (!hasVisited) fetchAndIncrementCount()
+    else fetchCount()
   }, [])
 
   return count
