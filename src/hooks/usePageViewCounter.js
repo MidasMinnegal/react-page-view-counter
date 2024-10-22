@@ -29,9 +29,9 @@ const getHost = () => {
 const removeSpecialCharactersFromString = (string) => string.replace(/[^a-zA-Z0-9]/g, '')
 
 export default function usePageViewCounter(
-  props = {},
+  settings = {},
 ) {
-  const { customKey } = props
+  const { customKey } = settings
   const [count, setCount] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
 
